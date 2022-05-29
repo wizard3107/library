@@ -31,9 +31,32 @@ router.patch('/issue/:id', async (req, res) => {
         }
         else{
             res.json("book not found")
+        }  
+    }
+    catch (e) {
+        console.log(e.message)
+    }
+}
+)
+router.patch('/return/:id', async (req, res) => {
+    try {
+        let data = await Library.findById(req.params.id)
+        console.log("data:", data)
+        if (data.availabilty === false) {
+            console.log("data:", data)
+            let update = await Library.findByIdAndUpdate(req.params.id,
+                {
+                    availabilty: req.body.availabilty,
+                    returnDate: req.body.returnDate
+                },
+                { new: true }
+            )
+            console.log(update)
+            res.json(update)
         }
-
-        
+        else {
+            res.json("book not Issued");
+        }
     }
     catch (e) {
         console.log(e.message)
