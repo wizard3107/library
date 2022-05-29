@@ -10,6 +10,7 @@ const connect =()=>{
     return mongoose.connect(DB_url);
 }
 app.use(express.json())
+app.use("/",bookController);
 app.use("/books",bookController);
 app.use("/library",libraryController);
 app.listen(PORT,'0.0.0.0',async()=>{
